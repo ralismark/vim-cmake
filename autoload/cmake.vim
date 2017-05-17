@@ -74,7 +74,13 @@ function! cmake#configure(...)
 	let args = [ 'cmake' ] + args + [ s:sh_escape(g:cmake_source_dir) ]
 	let cmd = join(args, ' ')
 
-	exe 'AsyncRun' ('-cwd=' . fnameescape(g:cmake_build_dir)) cmd
+	if exists(':AsyncRun') == 2
+		exe 'AsyncRun' ('-cwd=' . fnameescape(g:cmake_build_dir)) cmd
+	else
+		let cwd = getcwd()
+		exe 'cd' fnameescape(g:cmake_build_dir)
+		cexpr system(cmd)
+		exe 'cd' cwd
 	copen
 endfunction
 
@@ -97,6 +103,10 @@ endfunction
 
 function! cmake#build(clean, ...)
 	let cmd = cmake#build_command(a:clean, get(a:, 1, ''))
-	exec 'AsyncRun' cmd
+	if exists(':AsyncRun') == 2
+		exec 'AsyncRun' cmd
+	else
+		cexpr system(cmd)
+	endif
 	copen
 endfunction
