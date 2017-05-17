@@ -1,0 +1,97 @@
+*vim-cmake.txt*           Better CMake support         Last change: 2017 May 17
+
+                       _                              __        ~
+                 _  __(_)_ _    ____  ______ _  ___ _/ /_____   ~
+                | |/ / /  ' \  /___/ / __/  ' \/ _ `/  '_/ -_)  ~
+                |___/_/_/_/_/        \__/_/_/_/\_,_/_/\_\\__/   ~
+
+===============================================================================
+CONTENTS                                                        *vim-cmake-toc*
+
+    1. Introduction ....................................... |vim-cmake-intro|
+    2. Commands ........................................ |vim-cmake-commands|
+    3. Functions ...................................... |vim-cmake-functions|
+    4. Configuration ..................................... |vim-cmake-config|
+    5. License .......................................... |vim-cmake-license|
+
+===============================================================================
+INTRODUCTION                                      *vim-cmake* *vim-cmake-intro*
+
+Runs CMake commands to build and configure a project from inside Vim.
+
+AsyncRun is required for asynchronous running of commands. Otherwise, plain
+system() is used. In both cases, outputs to the error window.
+
+-------------------------------------------------------------------------------
+BASIC USAGE                                                   *vim-cmake-usage*
+
+See |vim-cmake-commands| for individual commands you can use. This section
+describes some other common usages.
+
+Configure and build a project, making a build dir in the source dir:
+>
+  :echo system('mkdir ' . cmake#source_dir() . '/build')
+  :exe 'CMakeConfigure' cmake#source_dir() . '/build'
+  :CMakeBuild
+<
+
+Using vim-cmake as the make program:
+>
+  :let &makeprg = cmake#build_command(false, '')
+<
+
+===============================================================================
+COMMANDS                                                  *vim-cmake-commands*
+
+
+:CMakeConfigure [{build-dir}]                   *:CMakeConfigure*
+		Finds the build directory, and configure and generate the
+		makefiles there. Requires the directory to exists. Optionally,
+		{build-dir} can be specified to override the build directory
+		search - see |g:cmake_build_dir| for details.
+
+:CMakeBuild[!] [{target}]                       *:CMakeBuild*
+		Builds the project in an previously configured build
+		directory. This builds {target} if specified (with --target
+		{target}), or everything. [!] will clean the build first
+		before builing (using --clean-first).
+
+===============================================================================
+FUNCTIONS                                                *vim-cmake-functions*
+
+cmake#source_dir()                              *cmake#source_dir()*
+		Finds the source directory by picking the directory closest to
+		the filesystem root which contains CMakeLists.txt. This sets
+		|g:cmake_source_dir| to the absolute path of this directory.
+
+cmake#build_dir()                               *cmake#build_dir()*
+		Finds the build directory by searching up the current path for
+		a folder named |g:cmake_build_dir| (or "build" by default).
+		This also set |g:cmake_build_dir| to the absolute path.
+
+cmake#configure([{path}])                       *cmake#configure()*
+		Configures the project, outputting to {path} (or
+		|cmake#build_dir()| by default). This is equivalent to the
+		|:CMakeConfigure| command.
+
+cmake#build({clean} [, {target}])               *cmake#build()*
+		Builds the project in |cmake#build_dir()|. If {clean} if true,
+		cleans the build directory first. This builds {target} (or
+		everything by default). this is equivalent to the
+		|:CMakeBuild| command.
+
+cmake#build_command({clean}, {target})          *cmake#build_command()*
+		Generates the command used to build a project, without
+		building first. If {clean} is true, clean before building. If
+		{target} is not empty, built that, otherwise build everything.
+		This can be used with |'makeprg'| to use |:make| to build.
+
+===============================================================================
+CONFIGURATION                                               *vim-cmake-config*
+
+===============================================================================
+LICENSE                                                    *vim-cmake-license*
+
+This plugin is licenced under the MIT licence.
+
+vim: ft=help
