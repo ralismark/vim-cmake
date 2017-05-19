@@ -98,6 +98,53 @@ cmake#build_command({clean}, {target})          *cmake#build_command()*
 ===============================================================================
 CONFIGURATION                                               *vim-cmake-config*
 
+Many of these options directly relate to CMake options (either command line
+flags or as definitions). It can be helpful to see that.
+
+*g:cmake_build_dir*
+		Build directory. Set this to a folder name (not path) to
+		search for that up the tree. Otherwise, a relative or absolute
+		path to the build directory. If not set or is empty, searches
+		for "build" specifically. This searching is done by
+		|cmake#build_dir()|, which sets this to the absolute path.
+
+*g:cmake_source_dir*
+		Source directory. If not set, looks for the shallowest folder
+		with "CMakeLists.txt". This search is done by
+		|cmake#source_dir()|.
+
+*g:cmake_generator*
+		Generator used (e.g. Makefiles) to generate makefiles. If not
+		set, it is not specified when configuring.
+
+*g:cmake_build_type*
+		The type of build to generate makefiles for. If not set, it is
+		not specified when configuring.
+
+*g:cmake_c_compiler*
+		The C compiler to use in makefiles when generating. Defaults
+		to |g:cmake_compiler| if not set. If that too is not set, it
+		is not specified when configuring.
+
+*g:cmake_cxx_compiler*
+		The C++ compiler to use in makefiles when generating. Defaults
+		to |g:cmake_compiler| if not set. If that too is not set, it
+		is not specified when configuring.
+
+*g:cmake_compiler*
+		The C/C++ compiler to use if a language-specific one is not
+		specified. This is the default to use if |g:cmake_c_compiler|
+		or |g:cmake_cxx_compiler| is not set.  This can be used if a
+		single compiler supports both C and C++.
+
+*g:cmake_install_prefix*
+		The path (absolute or relative) prepended to installs. If not
+		set, none is specified when configuring.
+
+*g:cmake_build_shared*
+		Whether to build shared or static libraries. This is a
+		boolean (and tested as such). If not set, none is specified.
+
 ===============================================================================
 LICENSE                                                    *vim-cmake-license*
 
