@@ -92,6 +92,8 @@ CONFIGURATION                                               *vim-cmake-config*
 ===============================================================================
 LICENSE                                                    *vim-cmake-license*
 
-This plugin is licenced under the MIT licence.
+This plugin is licenced under the MIT licence. A copy of it should be included
+with this (named LICENCE). It is available online at
+https://opensource.org/licenses/MIT.
 
 vim: ft=help
