@@ -1,4 +1,4 @@
-*vim-cmake.txt*           Better CMake support         Last change: 2017 May 17
+*vim-cmake.txt* 	Better CMake support
 
                        _                              __        ~
                  _  __(_)_ _    ____  ______ _  ___ _/ /_____   ~
