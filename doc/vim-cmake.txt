@@ -50,11 +50,15 @@ COMMANDS                                                  *vim-cmake-commands*
 		{build-dir} can be specified to override the build directory
 		search - see |g:cmake_build_dir| for details.
 
+		The equivalent function is |cmake#configure()|.
+
 :CMakeBuild[!] [{target}]                       *:CMakeBuild*
 		Builds the project in an previously configured build
 		directory. This builds {target} if specified (with --target
 		{target}), or everything. [!] will clean the build first
 		before builing (using --clean-first).
+
+		The equivalent function is |cmake#build()|.
 
 ===============================================================================
 FUNCTIONS                                                *vim-cmake-functions*
@@ -71,14 +75,19 @@ cmake#build_dir()                               *cmake#build_dir()*
 
 cmake#configure([{path}])                       *cmake#configure()*
 		Configures the project, outputting to {path} (or
-		|cmake#build_dir()| by default). This is equivalent to the
-		|:CMakeConfigure| command.
+		|cmake#build_dir()| by default). This is affected by most
+		cmake-vim config variables, all of which are listed in
+		|vim-cmake-config|. See there for more.
+
+		This is equivalent to the |:CMakeConfigure| command.
 
 cmake#build({clean} [, {target}])               *cmake#build()*
 		Builds the project in |cmake#build_dir()|. If {clean} if true,
 		cleans the build directory first. This builds {target} (or
-		everything by default). this is equivalent to the
-		|:CMakeBuild| command.
+		everything by default). This command used is generated from
+		|cmake#build_command()| - see there for more.
+
+		This is equivalent to the |:CMakeBuild| command.
 
 cmake#build_command({clean}, {target})          *cmake#build_command()*
 		Generates the command used to build a project, without
